@@ -147,22 +147,17 @@ async function leerFeed(fuente) {
 
 async function buscarImagenDeArticulo(url) {
   try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-      },
-      signal: AbortSignal.timeout(8000),
-    });
-    if (!res.ok) return null;
-    const html = await res.text();
-    const m =
-      html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i) ||
-      html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i) ||
-      html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i);
-    return m ? m[1] : null;
+    // microlink.io renderiza la página con un navegador real (headless),
+    // así que sí puede seguir el redirect de Google News y otras páginas
+    // que necesitan JavaScript para mostrar el contenido final.
+    const apiUrl =
+      "https://api.microlink.io?url=" + encodeURIComponent(url) + "&meta=true";
+    const res = await fetch(apiUrl, { signal: AbortSignal.timeout(12000) });
+    if (!res.ok) return null; // incluye el caso de 429 (límite diario gratis agotado)
+    const data = await res.json();
+    return data?.data?.image?.url || null;
   } catch {
-    return null; // si falla, la nota queda sin imagen y listo, no rompe nada
+    return null; // si falla, la nota queda sin imagen y usa el placeholder, no rompe nada
   }
 }
 
