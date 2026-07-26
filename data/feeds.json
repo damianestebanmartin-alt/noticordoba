@@ -1,9 +1,10 @@
 {
   "_instrucciones": "Agregá o sacá portales acá. 'categoria' es la que se usa si el feed no trae su propia categoría por nota (ver fetch-news.js). Valores válidos: Política, Economía, Policiales, Sociedad, Deportes.",
   "fuentes": [
-    { "nombre": "Cadena 3", "rss": "https://www.cadena3.com/rss/cordoba.xml", "categoria": "Sociedad" },
+    { "nombre": "Cadena 3 - Política y Economía", "rss": "https://cadena3.com/rss/PoliticayEconomia.xml", "categoria": "Política" },
+    { "nombre": "Cadena 3 - Sociedad", "rss": "https://cadena3.com/rss/Sociedad.xml", "categoria": "Sociedad" },
+    { "nombre": "Cadena 3 - Deportes", "rss": "https://cadena3.com/rss/Deportes.xml", "categoria": "Deportes" },
     { "nombre": "La Voz", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/cordoba/", "categoria": "Sociedad" },
-    { "nombre": "El Doce", "rss": "https://eldoce.tv/rss/cordoba", "categoria": "Sociedad" },
     { "nombre": "La Voz Deportes", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/deportes/", "categoria": "Deportes" },
     { "nombre": "La Voz Política", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/politica/", "categoria": "Política" },
     { "nombre": "La Voz Economía", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/economia/", "categoria": "Economía" },
