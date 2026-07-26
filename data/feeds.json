@@ -1,13 +1,10 @@
 {
-  "_instrucciones": "Agregá o sacá portales acá. 'categoria' es la que se usa si el feed no trae su propia categoría por nota (ver fetch-news.js). Valores válidos: Política, Economía, Policiales, Sociedad, Deportes.",
+  "_instrucciones": "Estos son feeds de Google News filtrados por tema + Córdoba. Google News agrega notas de varios portales (La Voz, El Doce, Cadena 3, etc.) sin bloquear pedidos automáticos, y cada nota linkea al portal original real. 'categoria' es la que se usa si Google News no la especifica.",
   "fuentes": [
-    { "nombre": "Cadena 3 - Política y Economía", "rss": "https://cadena3.com/rss/PoliticayEconomia.xml", "categoria": "Política" },
-    { "nombre": "Cadena 3 - Sociedad", "rss": "https://cadena3.com/rss/Sociedad.xml", "categoria": "Sociedad" },
-    { "nombre": "Cadena 3 - Deportes", "rss": "https://cadena3.com/rss/Deportes.xml", "categoria": "Deportes" },
-    { "nombre": "La Voz", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/cordoba/", "categoria": "Sociedad" },
-    { "nombre": "La Voz Deportes", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/deportes/", "categoria": "Deportes" },
-    { "nombre": "La Voz Política", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/politica/", "categoria": "Política" },
-    { "nombre": "La Voz Economía", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/economia/", "categoria": "Economía" },
-    { "nombre": "La Voz Policiales", "rss": "https://www.lavoz.com.ar/arc/outboundfeeds/rss/category/sucesos/", "categoria": "Policiales" }
+    { "nombre": "Google News - Política Córdoba", "rss": "https://news.google.com/rss/search?q=pol%C3%ADtica%20C%C3%B3rdoba%20Argentina%20when:2d&hl=es-419&gl=AR&ceid=AR:es-419", "categoria": "Política" },
+    { "nombre": "Google News - Economía Córdoba", "rss": "https://news.google.com/rss/search?q=econom%C3%ADa%20C%C3%B3rdoba%20Argentina%20when:2d&hl=es-419&gl=AR&ceid=AR:es-419", "categoria": "Economía" },
+    { "nombre": "Google News - Policiales Córdoba", "rss": "https://news.google.com/rss/search?q=inseguridad%20OR%20polic%C3%ADa%20C%C3%B3rdoba%20Argentina%20when:2d&hl=es-419&gl=AR&ceid=AR:es-419", "categoria": "Policiales" },
+    { "nombre": "Google News - Sociedad Córdoba", "rss": "https://news.google.com/rss/search?q=C%C3%B3rdoba%20Argentina%20when:2d&hl=es-419&gl=AR&ceid=AR:es-419", "categoria": "Sociedad" },
+    { "nombre": "Google News - Deportes Córdoba", "rss": "https://news.google.com/rss/search?q=Talleres%20OR%20Belgrano%20OR%20Instituto%20C%C3%B3rdoba%20when:2d&hl=es-419&gl=AR&ceid=AR:es-419", "categoria": "Deportes" }
   ]
 }
