@@ -1,0 +1,10 @@
+{
+  "_instrucciones": "Poné 1 o 2 banners. Si hay 2, rotan solos cada 8 segundos. Cambiá esto una vez por mes, nada más. Si la imagen está en Drive, el link tiene que tener el formato https://drive.google.com/uc?export=view&id=ID_DEL_ARCHIVO (no el link de 'Compartir' normal).",
+  "banners": [
+    {
+      "imagen": "https://drive.google.com/uc?export=view&id=1VGkTR6Uq_KyfACQnBNuZI6dve_au4i9k",
+      "link": "https://youtu.be/wHFzpIouYtY",
+      "alt": "Campaña calles y bacheos"
+    }
+  ]
+}
