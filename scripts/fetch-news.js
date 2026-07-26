@@ -75,9 +75,16 @@ function normalizarCategoria(textoCrudo, categoriaPorDefecto) {
 }
 
 function parsearItem(itemXml, nombreFuente, categoriaPorDefecto) {
-  const titulo = extraerTag(itemXml, "title") || "Sin título";
+  let titulo = extraerTag(itemXml, "title") || "Sin título";
   const categoriaRss = extraerTag(itemXml, "category");
   const categoria = normalizarCategoria(categoriaRss || titulo, categoriaPorDefecto);
+
+  // Si viene de Google News, <source> trae el nombre del medio real
+  // (La Voz, El Doce, Cadena 3, etc.) y el título suele traer " - Medio" al final.
+  const fuenteReal = extraerTag(itemXml, "source");
+  if (fuenteReal && titulo.endsWith(" - " + fuenteReal)) {
+    titulo = titulo.slice(0, -(" - " + fuenteReal).length);
+  }
 
   let link = extraerTag(itemXml, "link");
   if (!link) {
@@ -106,7 +113,7 @@ function parsearItem(itemXml, nombreFuente, categoriaPorDefecto) {
   return {
     titulo,
     link,
-    fuente: nombreFuente,
+    fuente: fuenteReal || nombreFuente,
     categoria,
     fecha: isNaN(fecha) ? new Date().toISOString() : fecha.toISOString(),
     imagen: imagen || null,
