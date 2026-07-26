@@ -53,16 +53,16 @@
 
   main { max-width: 1080px; margin: 0 auto; padding: 24px; }
 
-  .banner-wrap {
+  .cabecera-wrap {
     margin: 0 0 34px;
     border: 1px solid var(--gris-borde);
     background: #fff;
     position: relative;
     min-height: 60px;
   }
-  .banner-wrap a { display: block; }
-  .banner-wrap img { width: 100%; display: block; }
-  .banner-etiqueta {
+  .cabecera-wrap a { display: block; }
+  .cabecera-wrap img { width: 100%; display: block; }
+  .cabecera-etiqueta {
     position: absolute;
     top: 6px; left: 6px;
     font-size: 10px;
@@ -152,7 +152,7 @@
 </header>
 
 <main>
-  <div class="banner-wrap" id="banner"></div>
+  <div class="cabecera-wrap" id="cabecera"></div>
 
   <h2 class="titulo-seccion" id="titulo-seccion">Últimas notas</h2>
   <div class="grilla" id="grilla">
@@ -245,22 +245,22 @@ function pintarGrilla() {
     .join("");
 }
 
-async function pintarBanner() {
-  const cont = document.getElementById("banner");
+async function pintarCabecera() {
+  const cont = document.getElementById("cabecera");
   try {
-    const { banners } = await cargarJSON("data/banner.json");
-    if (!banners || banners.length === 0) { cont.remove(); return; }
+    const { elementos } = await cargarJSON("data/cabecera.json");
+    if (!elementos || elementos.length === 0) { cont.remove(); return; }
     let i = 0;
     function render() {
-      const b = banners[i];
+      const b = elementos[i];
       cont.innerHTML = `
-        <span class="banner-etiqueta">Publicidad</span>
+        <span class="cabecera-etiqueta">Publicidad</span>
         <a href="${b.link}" target="_blank" rel="noopener sponsored">
           <img src="${b.imagen}" alt="${b.alt || ''}">
         </a>`;
     }
     render();
-    if (banners.length > 1) setInterval(() => { i = (i + 1) % banners.length; render(); }, 8000);
+    if (elementos.length > 1) setInterval(() => { i = (i + 1) % elementos.length; render(); }, 8000);
   } catch {
     cont.remove();
   }
@@ -268,7 +268,7 @@ async function pintarBanner() {
 
 async function iniciar() {
   pintarNav();
-  pintarBanner();
+  pintarCabecera();
   try {
     DATA = await cargarJSON("data/data.json");
     pintarGrilla();
