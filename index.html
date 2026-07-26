@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NotiCórdoba | Noticias de Córdoba</title>
+<meta name="description" content="Las principales noticias de Córdoba, actualizadas todos los días.">
+<style>
+  :root {
+    --oscuro: #241f2b;
+    --rojo: #e5241b;
+    --blanco: #ffffff;
+    --gris-texto: #6b6875;
+    --gris-borde: #e7e5ea;
+    --fondo: #f6f5f3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--oscuro);
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 24px;
+    background: #fff;
+    border-bottom: 3px solid var(--oscuro);
+  }
+  header img.logo { height: 42px; display: block; }
+
+  nav { display: flex; gap: 22px; flex-wrap: wrap; }
+  nav button {
+    background: none;
+    border: none;
+    font: inherit;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    color: var(--oscuro);
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 2px;
+    border-bottom: 3px solid transparent;
+  }
+  nav button:hover { color: var(--rojo); }
+  nav button.activo { color: var(--rojo); border-bottom-color: var(--rojo); }
+
+  main { max-width: 1080px; margin: 0 auto; padding: 24px; }
+
+  .banner-wrap {
+    margin: 0 0 34px;
+    border: 1px solid var(--gris-borde);
+    background: #fff;
+    position: relative;
+    min-height: 60px;
+  }
+  .banner-wrap a { display: block; }
+  .banner-wrap img { width: 100%; display: block; }
+  .banner-etiqueta {
+    position: absolute;
+    top: 6px; left: 6px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  h2.titulo-seccion {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--rojo);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin: 0 0 18px;
+  }
+
+  .grilla {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 900px) { .grilla { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .grilla { grid-template-columns: 1fr; } }
+
+  .card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid var(--gris-borde);
+    overflow: hidden;
+  }
+  .card-img-wrap {
+    position: relative;
+    aspect-ratio: 4/3;
+    background: #ccc;
+    overflow: hidden;
+  }
+  .card-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.2s ease;
+  }
+  .card:hover .card-img-wrap img { transform: scale(1.04); }
+  .card-overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 30px 12px 10px;
+    background: linear-gradient(to top, rgba(20,16,24,0.92), rgba(20,16,24,0));
+  }
+  .card-titulo {
+    color: #fff;
+    font-weight: 800;
+    font-size: 14.5px;
+    line-height: 1.3;
+  }
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 12px;
+    font-size: 11px;
+    color: var(--gris-texto);
+  }
+  .card-meta .fuente { color: var(--rojo); font-weight: 700; text-transform: uppercase; }
+
+  .estado { text-align: center; padding: 40px 20px; color: var(--gris-texto); font-size: 14px; grid-column: 1 / -1; }
+
+  footer {
+    text-align: center;
+    padding: 30px 20px 50px;
+    font-size: 12px;
+    color: var(--gris-texto);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img class="logo" src="assets/logo.png" alt="NotiCórdoba">
+  <nav id="nav"></nav>
+</header>
+
+<main>
+  <div class="banner-wrap" id="banner"></div>
+
+  <h2 class="titulo-seccion" id="titulo-seccion">Últimas notas</h2>
+  <div class="grilla" id="grilla">
+    <div class="estado">Cargando…</div>
+  </div>
+</main>
+
+<footer>
+  NotiCórdoba recopila automáticamente titulares de portales de Córdoba y enlaza a la fuente original.
+  Ninguna nota se reproduce completa acá.
+</footer>
+
+<script>
+const CATEGORIAS = ["Política", "Economía", "Policiales", "Sociedad", "Deportes"];
+let DATA = null;
+let categoriaActiva = null; // null = Inicio, sin filtro
+
+async function cargarJSON(ruta) {
+  const res = await fetch(ruta + "?v=" + Date.now());
+  if (!res.ok) throw new Error("no se pudo cargar " + ruta);
+  return res.json();
+}
+
+function formatearFecha(iso) {
+  const d = new Date(iso);
+  return d.toLocaleString("es-AR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+}
+
+function imgOFallback(url) {
+  return url || "https://via.placeholder.com/500x375?text=NotiCordoba";
+}
+
+function pintarNav() {
+  const nav = document.getElementById("nav");
+  const items = [{ nombre: "Inicio", valor: null }, ...CATEGORIAS.map((c) => ({ nombre: c, valor: c }))];
+  nav.innerHTML = items
+    .map((it) => `<button data-cat="${it.valor ?? ""}" class="${categoriaActiva === it.valor ? "activo" : ""}">${it.nombre}</button>`)
+    .join("");
+  nav.querySelectorAll("button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      categoriaActiva = btn.dataset.cat || null;
+      pintarNav();
+      pintarGrilla();
+    });
+  });
+}
+
+function pintarGrilla() {
+  const grilla = document.getElementById("grilla");
+  const titulo = document.getElementById("titulo-seccion");
+  if (!DATA) return;
+
+  let notas;
+  if (categoriaActiva) {
+    notas = DATA.historial.filter((n) => n.categoria === categoriaActiva);
+    titulo.textContent = categoriaActiva;
+  } else {
+    // Inicio: el top3 primero, después el resto del historial sin repetir
+    const linksTop3 = new Set(DATA.top3.map((n) => n.link));
+    notas = [...DATA.top3, ...DATA.historial.filter((n) => !linksTop3.has(n.link))];
+    titulo.textContent = "Últimas notas";
+  }
+
+  if (notas.length === 0) {
+    grilla.innerHTML = `<div class="estado">Todavía no hay notas clasificadas en esta sección.</div>`;
+    return;
+  }
+
+  grilla.innerHTML = notas
+    .map(
+      (n) => `
+    <a class="card" href="${n.link}" target="_blank" rel="noopener">
+      <div class="card-img-wrap">
+        <img src="${imgOFallback(n.imagen)}" alt="" loading="lazy">
+        <div class="card-overlay"><div class="card-titulo">${n.titulo}</div></div>
+      </div>
+      <div class="card-meta">
+        <span class="fuente">${n.fuente}</span>
+        <span>${formatearFecha(n.fecha)}</span>
+      </div>
+    </a>`
+    )
+    .join("");
+}
+
+async function pintarBanner() {
+  const cont = document.getElementById("banner");
+  try {
+    const { banners } = await cargarJSON("data/banner.json");
+    if (!banners || banners.length === 0) { cont.remove(); return; }
+    let i = 0;
+    function render() {
+      const b = banners[i];
+      cont.innerHTML = `
+        <span class="banner-etiqueta">Publicidad</span>
+        <a href="${b.link}" target="_blank" rel="noopener sponsored">
+          <img src="${b.imagen}" alt="${b.alt || ''}">
+        </a>`;
+    }
+    render();
+    if (banners.length > 1) setInterval(() => { i = (i + 1) % banners.length; render(); }, 8000);
+  } catch {
+    cont.remove();
+  }
+}
+
+async function iniciar() {
+  pintarNav();
+  pintarBanner();
+  try {
+    DATA = await cargarJSON("data/data.json");
+    pintarGrilla();
+  } catch (err) {
+    document.getElementById("grilla").innerHTML = `<div class="estado">No se pudo cargar las noticias. Probá recargar la página.</div>`;
+    console.error(err);
+  }
+}
+
+iniciar();
+</script>
+
+</body>
+</html>
