@@ -126,7 +126,7 @@
   }
   .card-meta {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 9px 12px;
     font-size: 11px;
@@ -181,13 +181,14 @@ function formatearFecha(iso) {
   return d.toLocaleString("es-AR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
 }
 
-function imgOFallback(url) {
+function imgOFallback(url, categoria) {
   if (url) return url;
   // placeholder propio (SVG embebido), no depende de ningún servicio externo
+  const etiqueta = categoria || "NOTICORDOBA";
   return (
     "data:image/svg+xml;utf8," +
     encodeURIComponent(
-      `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="375"><rect width="100%" height="100%" fill="#2a2430"/><text x="50%" y="50%" fill="#e5241b" font-family="sans-serif" font-size="28" font-weight="800" text-anchor="middle" dominant-baseline="middle">NOTICORDOBA</text></svg>`
+      `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="375"><rect width="100%" height="100%" fill="#2a2430"/><text x="50%" y="46%" fill="#ffffff" font-family="sans-serif" font-size="20" font-weight="800" text-anchor="middle" dominant-baseline="middle" letter-spacing="1">NOTICORDOBA</text><text x="50%" y="58%" fill="#e5241b" font-family="sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="middle" letter-spacing="2">${etiqueta.toUpperCase()}</text></svg>`
     )
   );
 }
@@ -233,11 +234,10 @@ function pintarGrilla() {
       (n) => `
     <a class="card" href="${n.link}" target="_blank" rel="noopener">
       <div class="card-img-wrap">
-        <img src="${imgOFallback(n.imagen)}" alt="" loading="lazy">
+        <img src="${imgOFallback(n.imagen, n.categoria)}" alt="" loading="lazy">
         <div class="card-overlay"><div class="card-titulo">${n.titulo}</div></div>
       </div>
       <div class="card-meta">
-        <span class="fuente">${n.fuente}</span>
         <span>${formatearFecha(n.fecha)}</span>
       </div>
     </a>`
