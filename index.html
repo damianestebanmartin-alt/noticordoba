@@ -182,7 +182,14 @@ function formatearFecha(iso) {
 }
 
 function imgOFallback(url) {
-  return url || "https://via.placeholder.com/500x375?text=NotiCordoba";
+  if (url) return url;
+  // placeholder propio (SVG embebido), no depende de ningún servicio externo
+  return (
+    "data:image/svg+xml;utf8," +
+    encodeURIComponent(
+      `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="375"><rect width="100%" height="100%" fill="#2a2430"/><text x="50%" y="50%" fill="#e5241b" font-family="sans-serif" font-size="28" font-weight="800" text-anchor="middle" dominant-baseline="middle">NOTICORDOBA</text></svg>`
+    )
+  );
 }
 
 function pintarNav() {
