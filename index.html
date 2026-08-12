@@ -250,7 +250,7 @@ async function pintarCabecera() {
   try {
     const { elementos } = await cargarJSON("data/cabecera.json");
     if (!elementos || elementos.length === 0) { cont.remove(); return; }
-    let i = 0;
+    let i = Math.floor(Math.random() * elementos.length);
     function render() {
       const b = elementos[i];
       cont.innerHTML = `
