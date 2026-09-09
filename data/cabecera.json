@@ -1,15 +1,10 @@
 {
-  "_instrucciones": "Poné 1 o 2 banners publicitarios. Si hay 2, rotan solos cada 8 segundos. Cambiá esto una vez por mes, nada más. Si la imagen está en Drive, el link tiene que tener el formato https://drive.google.com/uc?export=view&id=ID_DEL_ARCHIVO (no el link de 'Compartir' normal). Nota: este archivo se llama 'cabecera.json' a propósito, no 'banner.json' - los bloqueadores de publicidad del navegador bloquean automáticamente cualquier archivo que tenga la palabra 'banner' en el nombre.",
-  "elementos": [
-    {
-      "imagen": "assets/julio26.gif",
-      "link": "https://youtu.be/wHFzpIouYtY",
-      "alt": "Campaña calles y bacheos"
-    },
-    {
-      "imagen": "assets/velez.gif",
-      "link": "https://youtu.be/DO7v8a5wIMw",
-      "alt": "Campaña Vélez"
-    }
-  ]
+    "_instrucciones": "Poné 1 o 2 banners publicitarios. Si hay 2, rotan solos cada 8 segundos. Cambiá esto una vez por mes, nada más. Si la imagen está en Drive, el link tiene que tener el formato https://drive.google.com/uc?export=view&id=ID_DEL_ARCHIVO (no el link de 'Compartir' normal). Nota: este archivo se llama 'cabecera.json' a propósito, no 'banner.json' - los bloqueadores de publicidad del navegador bloquean automáticamente cualquier archivo que tenga la palabra 'banner' en el nombre.",
+    "elementos": [
+          {
+                  "imagen": "assets/banner_1200x200.gif",
+                  "link": "https://youtu.be/Ds2cjg-mbuk",
+                  "alt": "Cuotas sin interés con Tarjeta Cordobesa para las familias"
+          }
+    ]
 }
