@@ -1,0 +1,12 @@
+{
+  "_instrucciones": "Canales de YouTube para el widget de videos. El script scripts/fetch-videos.js trae los ultimos videos de cada canal (YouTube Data API v3, con la YOUTUBE_API_KEY cargada como secreto en GitHub Actions) y arma data/videos.json. channelId es el ID real del canal (empieza con UC), no el @handle. Para agregar un canal: abri su pagina de YouTube, Ver codigo fuente (Ctrl+U), busca externalId y copia el valor que empieza con UC. Se muestran los videos mas recientes de todos los canales juntos.",
+  "canales": [
+    { "nombre": "Cadena 3", "channelId": "UCNxohbqfDp8YxW_Mji2XMHA", "categoria": "Noticias" },
+    { "nombre": "Canal 10 Córdoba", "channelId": "UCUzonpa3XKurQVycdMY70XQ", "categoria": "Noticias" },
+    { "nombre": "Telefe Córdoba", "channelId": "UC3OQ66wEJaOPHK25IBdWR_g", "categoria": "Noticias" },
+    { "nombre": "El Doce", "channelId": "UCiaePeoCqpU8hBHiNrgkzrA", "categoria": "Noticias" },
+    { "nombre": "cba24n", "channelId": "UCJzu9UybNebfzgEZVL9VS_g", "categoria": "Noticias" },
+    { "nombre": "Perfil Córdoba", "channelId": "UCU_hRaNMykId4Ijo-uOtZXQ", "categoria": "Noticias" },
+    { "nombre": "Todo Noticias", "channelId": "UCj6PcyLvpnIRT_2W_mwa9Aw", "categoria": "Noticias" }
+  ]
+}
