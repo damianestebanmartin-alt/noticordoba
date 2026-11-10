@@ -13,8 +13,8 @@ import path from "node:path";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CANALES_PATH = path.join(__dirname, "..", "data", "canales-video.json");
 const SALIDA_PATH = path.join(__dirname, "..", "data", "videos.json");
-const VIDEOS_POR_CANAL = 2;
-const MAX_VIDEOS = 8;
+const VIDEOS_POR_CANAL = 3;
+const MAX_VIDEOS = 12;
 
 async function videosDeCanal(canal, apiKey) {
   try {
