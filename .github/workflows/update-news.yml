@@ -20,12 +20,15 @@ jobs:
           node-version: "22"
 
       - name: Correr el bot de noticias
-        run: node scripts/fetch-news.js
+        run: node scripts/fetch-news.js && node scripts/fetch-videos.js
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       - name: Commitear data.json si cambió
         run: |
           git config user.name "noticordoba-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/data.json
+          git add data/videos.json || true
           git diff --staged --quiet || git commit -m "Actualización automática de noticias"
           git push
